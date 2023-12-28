@@ -58,7 +58,7 @@ const handleSubmit=async(e)=>
     
         
         <Link to={"/sign-in"}>
-        <p className='text-2xl text-white overline'>Have an Account!</p>
+        <p className='text-2xl text-white overline mt-5'>Have an Account!</p>
 
     </Link>
     </div>
