@@ -15,9 +15,11 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
 
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -99,6 +101,21 @@ export default function Profile() {
       dispatch(deleteUserFailure(error.message));
     }
   };
+  const handleSignOut = async () => {
+
+    try {
+      dispatch(signOutUserStart())
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
+  }
   return (
     <div className='bg-gradient-to-t from-pink-500 to-white'>
        
@@ -136,11 +153,12 @@ export default function Profile() {
         <input type="email" placeholder='email' id='email' className='text-xl font-thin rounded-md p-3 shadow-white shadow-md' defaultValue={currentUser.email}  onChange={handleChange}/>
         <input type="text" placeholder='password' id='password' className='text-xl font-thin rounded-md p-3 shadow-white shadow-md'   onChange={handleChange}/>
         <button disabled={loading} className='text-3xl bg-gradient-to-r from-white to-red-500 font-thin rounded-md shadow-white shadow-xl  items-center mt-3 mb-5 p-4'>{loading ? 'Loading...' : 'Update'}</button>
-
+<Link to={"/create-listing"}>
+<h1 className='text-center bg-white p-2 rounded-md shadow-red-500 shadow-inner'>Create Listing</h1></Link>
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className='text-red-700 font-thin cursor-pointer bg-white p-2 rounded-md  shadow-red-500 shadow-md'>Delete account</span>
-        <span className='text-red-700 font-thin cursor-pointer  bg-white p-2 rounded-md  shadow-red-500 shadow-md'>Sign out</span>
+        <span onClick={handleSignOut} className='text-red-700 font-thin cursor-pointer  bg-white p-2 rounded-md  shadow-red-500 shadow-md'>Sign out</span>
       </div>
     </div>
 

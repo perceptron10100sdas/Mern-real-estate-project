@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
+import listingRouter from './routes/listing.route.js';
 mongoose.connect("mongodb+srv://sambhavdas:iamsdasbrain@cluster0.jqdos0l.mongodb.net/mern-estate?retryWrites=true&w=majority").then(()=>{console.log("connected to mongodb")}).catch((err)=>{
     console.log(err);
 })
@@ -13,6 +14,7 @@ app.listen(3000,()=>{
 })
 app.use('/api/user',userRouter)
 app.use('/api/auth', authRouter);
+app.use('/api/listing', listingRouter);
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode|| 501;
     const message=err.message||'internal server error';
