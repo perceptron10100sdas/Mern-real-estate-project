@@ -6,7 +6,7 @@ import { FaSearch } from 'react-icons/fa';
 export default function Header() {
   return (
     <div className='bg-gradient-to-l from-pink-700 to-white p-3 flex justify-between '>
-      <h1 className='text-3xl text-red-500 font-bold'>ASPIRE</h1>
+      <h1 className='text-3xl text-red-500 font-bold'>magicBricks</h1>
 
 <div className='flex space-x-2'>
       <input placeholder='enter the search content' className='p-3 rounded-md shadow-red-600 shadow-xl'/>
