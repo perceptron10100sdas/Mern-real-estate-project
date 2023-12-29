@@ -11,6 +11,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Creatlisting from './pages/Createlisting'
 import UpdateListing from './pages/UpdateListing'
 import Listing from './pages/Listing'
+import Search from './pages/Search'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
 
         </Route>
         <Route path='/create-listing' element={<Creatlisting/>} />
+        <Route path='/search' element={<Search/>} />
         <Route
             path='/update-listing/:listingId'
             element={< UpdateListing/>}
