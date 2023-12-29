@@ -302,7 +302,7 @@ export default function Creatlisting() {
           <button  type='button'
               disabled={uploading}
               onClick={handleImageSubmit}
-              className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'>{uploading ? 'Uploading...' : 'Upload'}</button>
+              className='p-3 text-green-700 rounded-md bg-white shadow-pink-500 shadow-md border border-green-700  uppercase hover:shadow-lg disabled:opacity-80'>{uploading ? 'Uploading...' : 'Upload'}</button>
         </div>
         <p className='text-red-700 text-sm'>
             {imageUploadError && imageUploadError}

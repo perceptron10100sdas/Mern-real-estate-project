@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ListingItem from '../components/ListingItem';
 
 export default function Search() {
     const navigate = useNavigate();
@@ -211,7 +212,7 @@ export default function Search() {
               {showMore && (
             <button
               onClick={onShowMoreClick}
-              className='text-green-700 hover:underline p-7 text-center w-full'
+              className='bg-white p-2 rounded-md text-red-600 font-thin  shadow-pink-500 shadow-md'
             >
               Show more
             </button>
