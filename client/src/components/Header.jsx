@@ -8,7 +8,7 @@ export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <div className='bg-gradient-to-l from-pink-700 to-white p-3 flex justify-between '>
-      <h1 className='text-3xl text-red-500 font-bold'>magicBricks</h1>
+      <h1 className='text-3xl text-red-700 font-light bg-white rounded-md p-3'>BlushHavenHomes.com</h1>
 
 <div className='flex space-x-2 mb-3'>
       <input placeholder='enter the search content' className='p-3 rounded-md shadow-red-600 shadow-md'/>
