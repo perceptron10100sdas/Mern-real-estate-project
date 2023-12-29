@@ -28,6 +28,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     if (file) {
@@ -40,6 +42,7 @@ export default function Profile() {
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
+   
 
     uploadTask.on(
       'state_changed',
@@ -116,6 +119,39 @@ export default function Profile() {
       dispatch(deleteUserFailure(data.message));
     }
   }
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className='bg-gradient-to-t from-pink-500 to-white'>
        
@@ -156,6 +192,7 @@ export default function Profile() {
 <Link to={"/create-listing"}>
 <h1 className='text-center bg-white p-2 rounded-md shadow-red-500 shadow-inner'>Create Listing</h1></Link>
       </form>
+      <button className='bg-pink-700 text-white shadow-white shadow-2xl text-2xl p-3 rounded-md mt-4 font-light' onClick={handleShowListings} >Show Listings</button>
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className='text-red-700 font-thin cursor-pointer bg-white p-2 rounded-md  shadow-red-500 shadow-md'>Delete account</span>
         <span onClick={handleSignOut} className='text-red-700 font-thin cursor-pointer  bg-white p-2 rounded-md  shadow-red-500 shadow-md'>Sign out</span>
@@ -166,6 +203,40 @@ export default function Profile() {
       <p className='text-green-700 mt-5'>
         {updateSuccess ? 'User is updated successfully!' : ''}
       </p>
+      <p className='text-red-700 mt-5'>
+        {showListingsError ? 'Error showing listings' : ''}
+      </p>
+
+      {userListings &&
+        userListings.length > 0 &&
+        <div className="flex flex-col gap-4">
+          <h1 className='text-center mt-7 text-2xl font-light text-pink-500 bg-white mx-5 p-3 shadow-red-500 shadow-md rounded-md overline'>Your Listings</h1>
+          {userListings.map((listing) => (
+            <div
+              key={listing._id}
+              className='border p-3 flex justify-between items-center gap-4 bg-white bg-opacity-70 shadow-white shadow-xl mx-3 rounded-md '
+            >
+              <Link to={`/listing/${listing._id}`}>
+                <img
+                  src={listing.imageUrls[0]}
+                  alt='listing cover'
+                  className='h-16 w-16 object-contain'
+                />
+              </Link>
+              <Link
+                className='bg-white p-2 rounded-md text-pink-600  shadow-pink-500 shadow-md mt-2  font-thin text-xl hover:underline truncate flex-1'
+                to={`/listing/${listing._id}`}
+              >
+                <p>{listing.name}</p>
+              </Link>
+
+              <div className='flex flex-col item-center'>
+                <button onClick={() => handleListingDelete(listing._id)} className='bg-white p-2 rounded-md text-red-600 font-semibold shadow-pink-500 shadow-md mt-2'>Delete</button>
+                <button className='bg-white p-2 rounded-md text-green-600 font-semibold shadow-pink-500 shadow-md mt-2'>Edit</button>
+              </div>
+            </div>
+          ))}
+        </div>}
     </div>
   )
 }
