@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 import listingRouter from './routes/listing.route.js';
+import cookieParser from "cookie-parser";
 mongoose.connect("mongodb+srv://sambhavdas:iamsdasbrain@cluster0.jqdos0l.mongodb.net/mern-estate?retryWrites=true&w=majority").then(()=>{console.log("connected to mongodb")}).catch((err)=>{
     console.log(err);
 })
