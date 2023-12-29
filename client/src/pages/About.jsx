@@ -10,6 +10,7 @@ export default function About() {
     </p>
     <p className='mb-4 text-slate-700  font-extralight'>Our team of agents has a wealth of experience and knowledge in the real estate industry, and we are committed to providing the highest level of service to our clients. We believe that buying or selling a property should be an exciting and rewarding experience, and we are dedicated to making that a reality for each and every one of our clients.</p>
     <p className='bg-white p-2 rounded-md text-red-600 font-semibold  shadow-pink-500 shadow-md text-right'>-Sambhav Das<p>CEO and CHAIRMAN</p></p>
+    <p className='mt-14 text-right'>copyrights@perceptron10100sdas</p>
   </div>
   )
 }
